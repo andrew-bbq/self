@@ -7,3 +7,92 @@ canvas {
     height: 100%;
     font-size: 0;
 }
+
+#andrew-title-overlay {
+    position: fixed;
+    top: 10vh;
+    left: 11vw;
+    width: 18vw;
+    height: 50vh;
+    background-image: url('./assets/andrew_title.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top left;
+    z-index: 10;
+    pointer-events: none;
+
+    animation-name: title-fade;
+    animation-duration: 10s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.bennett-title-overlay {
+    position: fixed;
+    top: 18vh;
+    left: 5vw;
+    width: 30vw;
+    height: 50vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top left;
+    z-index: 10;
+    pointer-events: none;
+
+    animation-name: title-fade;
+    animation-duration: 10.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes title-fade {
+
+    0%,
+    90% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+#bennett-base {
+    background-image: url('./assets/bennett_title/base.png');
+}
+
+#bennett-bbottom {
+    background-image: url('./assets/bennett_title/bbottom.png');
+}
+
+#bennett-bmiddle {
+    background-image: url('./assets/bennett_title/bmiddle.png');
+}
+
+#bennett-e1top {
+    background-image: url('./assets/bennett_title/e1top.png');
+}
+
+#bennett-e2bottomleft {
+    background-image: url('./assets/bennett_title/e2bottomleft.png');
+}
+
+#bennett-e2bottomright {
+    background-image: url('./assets/bennett_title/e2bottomright.png');
+}
+
+#bennett-e2fragment {
+    background-image: url('./assets/bennett_title/e2fragment.png');
+}
+
+#bennett-e2top {
+    background-image: url('./assets/bennett_title/e2top.png');
+}
+
+#bennett-n1top {
+    background-image: url('./assets/bennett_title/n1top.png');
+}
+
+#bennett-n2top {
+    background-image: url('./assets/bennett_title/n2top.png');
+}
