@@ -21,10 +21,7 @@ canvas {
     z-index: 10;
     pointer-events: none;
 
-    animation-name: title-fade;
-    animation-duration: 10s;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards;
+    animation: title-fade 10s ease-in forwards;
 }
 
 .bennett-title-overlay {
@@ -39,10 +36,7 @@ canvas {
     z-index: 10;
     pointer-events: none;
 
-    animation-name: title-fade;
-    animation-duration: 10.5s;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards;
+    animation: title-fade 10.5s ease-in forwards;
 }
 
 @keyframes title-fade {
@@ -63,36 +57,125 @@ canvas {
 
 #bennett-bbottom {
     background-image: url('./assets/bennett_title/bbottom.png');
+    animation: title-fade 10.5s ease-in forwards, float-down 800s ease-in forwards;
 }
 
 #bennett-bmiddle {
     background-image: url('./assets/bennett_title/bmiddle.png');
+    animation: title-fade 10.5s ease-in forwards, float-right-short 890s ease-in forwards;
 }
 
 #bennett-e1top {
     background-image: url('./assets/bennett_title/e1top.png');
+    animation: title-fade 10.5s ease-in forwards, float-up-left 800s ease-in forwards;
 }
 
 #bennett-e2bottomleft {
     background-image: url('./assets/bennett_title/e2bottomleft.png');
+    animation: title-fade 10.5s ease-in forwards, float-down-left 1200s ease-in forwards;
 }
 
 #bennett-e2bottomright {
     background-image: url('./assets/bennett_title/e2bottomright.png');
+    animation: title-fade 10.5s ease-in forwards, float-down-right 2400s ease-in forwards;
 }
 
 #bennett-e2fragment {
     background-image: url('./assets/bennett_title/e2fragment.png');
+    animation: title-fade 10.5s ease-in forwards, float-up-short 950s ease-in forwards;
 }
 
 #bennett-e2top {
     background-image: url('./assets/bennett_title/e2top.png');
+    animation: title-fade 10.5s ease-in forwards, float-up-right-high 969s ease-in forwards;
 }
 
 #bennett-n1top {
     background-image: url('./assets/bennett_title/n1top.png');
+    animation: title-fade 10.5s ease-in forwards, float-up-right 2000s ease-in forwards;
 }
 
 #bennett-n2top {
     background-image: url('./assets/bennett_title/n2top.png');
+    animation: title-fade 10.5s ease-in forwards, float-up-left 1000s ease-in forwards;
+}
+
+@keyframes float-up-left {
+    5% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(9%, -12%) rotate(-13deg);
+    }
+}
+
+@keyframes float-up-right {
+    5% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(13%, -9%) rotate(13deg);
+    }
+}
+
+@keyframes float-up-right-high {
+    5% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(5%, -12%) rotate(4deg);
+    }
+}
+
+@keyframes float-down {
+    5% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(0%, 9%);
+    }
+}
+
+@keyframes float-down-left {
+    5% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-9%, 3%) rotate(12deg);
+    }
+}
+
+@keyframes float-up-short {
+    5% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1%, -3%) rotate(2deg);
+    }
+}
+
+@keyframes float-down-right {
+    5% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(9%, 20%) rotate(-5deg);
+    }
+}
+
+@keyframes float-right-short {
+    5% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(2.5%, 0%);
+    }
 }

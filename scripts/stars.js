@@ -1,16 +1,28 @@
 import * as THREE from 'three';
-import { START_FADE_IN_TIME, END_FADE_IN_TIME } from './constants.js';
+import { START_FADE_IN_TIME, END_FADE_IN_TIME, TITLE_FADE_START } from './constants.js';
 
 const WIDTH = window.innerWidth;
 const HEIGHT = window.innerHeight;
 
 let time = 0;
 
-const STAR_COUNT = (WIDTH + HEIGHT);
+const STAR_COUNT = (WIDTH + HEIGHT) / 1.5;
 const starData = [];
 const BASE_STAR_RADIUS = Math.min(1, WIDTH / 1300);
 const MIN_STAR_DISTANCE = 300;
 const MAX_STAR_DISTANCE = 400;
+
+// couldn't think of a better name for this, higher is slower; inverse spin factor?
+const STAR_SPIN_FACTOR = 20;
+
+// supernova criteria
+const RED_GIANT_OFFSET = 300; // minimum time for stars to go supernova
+const RED_GIANT_SCALE = 3000; // max possible time after offset for supernova to happen
+const RED_GIANT_START_OFFSET = 120; // stars will start turning red over x seconds
+const SUPERNOVA_OFFSET = 20; // stars will go supernova x seconds after red giant has been reached
+
+// supernova color constants
+const SUPERNOVA_G = 0.75;
 
 export function createStars(scene) {
     const starGeometry = new THREE.SphereGeometry(BASE_STAR_RADIUS, 16, 16);
@@ -41,24 +53,31 @@ export function createStars(scene) {
          * size: max size of star (should oscillate between max and some smaller value)
          * opacity: also oscillating to simulate twinkling, can probly use this for size oscillation, too
          * midpoint: time when we should stop turning red and start turning blue
-         * endpoint: time when we should esplode
          */
-        const midpoint = (Math.random() * 30) + 30;
+        const midpoint = (Math.random() * RED_GIANT_SCALE) + RED_GIANT_OFFSET;
         starData.push({
             index: i,
-            size: Math.random() * 3,
+            size: Math.random() * 2.5,
             opacity: Math.random() * Math.PI,
-            midpoint: midpoint,
-            endpoint: midpoint + 5
+            midpoint,
+            exploded: false,
         });
     }
 
     scene.add(instancedMesh);
 
     function update(delta) {
+        const rotation_matrix = new THREE.Matrix3();
+        rotation_matrix.set(
+            Math.cos((delta / STAR_SPIN_FACTOR)), 0, Math.sin((delta / STAR_SPIN_FACTOR)),
+            0, 1, 0,
+            -Math.sin((delta / STAR_SPIN_FACTOR)), 0, Math.cos((delta / STAR_SPIN_FACTOR))
+        );
         time += delta;
+        const toRemove = [];
         starData.forEach((star) => {
             instancedMesh.getMatrixAt(star.index, dummy.matrix);
+            dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale);
 
             star.opacity += (delta / 3);
             const brightness = (Math.sin(star.opacity) + 1) / 2;
@@ -68,23 +87,44 @@ export function createStars(scene) {
             } else if (time < END_FADE_IN_TIME) {
                 const scaled_brightness = (time - START_FADE_IN_TIME) * brightness;
                 color.setRGB(scaled_brightness, scaled_brightness, scaled_brightness);
-            } else {
+            } else if (time < star.midpoint - RED_GIANT_START_OFFSET) {
                 color.setRGB(brightness, brightness, brightness);
-                // todo: color depending on timescale (stage 1 turn white to red, stage 2 turn red to blue and explode)
-                /**if (star.time < RED_GIANT_TIME) {
-                    const redness = (RED_GIANT_TIME - star.time) / RED_GIANT_TIME;
-                    color.setRGB(255 * brightness, redness * 255 * brightness, redness * 255 * brightness);
-                } else if (star.time < SUPERNOVA_TIME) {
-                    color.setRGB(255, 0, 0);
-                }*/
             }
+            else if (time < star.midpoint) {
+                const redness = (star.midpoint - time) / (RED_GIANT_START_OFFSET);
+                color.setRGB(brightness, redness * brightness, redness * brightness);
+            } else if (time < (star.midpoint + SUPERNOVA_OFFSET)) {
+                const redness = (star.midpoint + SUPERNOVA_OFFSET - time) / SUPERNOVA_OFFSET;
+                const r = brightness * redness;
+                const g = brightness * (1 - redness) * SUPERNOVA_G;
+                const b = brightness * (1 - redness);
+                color.setRGB(r, g, b);
+            } else {
+                if (!star.exploded) {
+                    star.exploded = true;
+                }
+                color.setRGB(0.1 * brightness, SUPERNOVA_G * brightness, brightness);
+                // play some particle effects and mark this for deletion
+            }
+
+
+            // rotate around y axis
+            if (time > TITLE_FADE_START) {
+                dummy.position.applyMatrix3(rotation_matrix);
+            }
+
+            // derive scale from brightness
+            dummy.scale.setScalar(brightness * star.size * 0.5);
+
+            dummy.updateMatrix();
+            instancedMesh.setMatrixAt(star.index, dummy.matrix);
 
             //instancedMesh.scale.set(brightness * star.size, brightness * star.size, brightness * star.size);
             instancedMesh.setColorAt(star.index, color)
 
-
         });
         instancedMesh.instanceColor.needsUpdate = true;
+        instancedMesh.instanceMatrix.needsUpdate = true;
     }
 
     return { update };
