@@ -4,10 +4,7 @@ import { START_FADE_IN_TIME, END_FADE_IN_TIME, TITLE_FADE_START } from './consta
 const WIDTH = window.innerWidth;
 const HEIGHT = window.innerHeight;
 
-let time = 0;
-
 const STAR_COUNT = (WIDTH + HEIGHT) * 2;
-const starData = [];
 const BASE_STAR_RADIUS = Math.min(1, WIDTH / 1300);
 const MIN_STAR_DISTANCE = 300;
 const MAX_STAR_DISTANCE = 400;
@@ -29,8 +26,7 @@ const STATUS_EXPLODED = "ESPLODED";
 const SUPERNOVA_G = 0.75;
 
 // explosion constants
-const particleData = [];
-const PARTICLE_COUNT = 500;
+const PARTICLE_COUNT = 400;
 const PARTICLES_PER_EXPLOSION = 20;
 const PARTICLE_LIFETIME = 2.6;
 
@@ -47,15 +43,14 @@ export function createStars(scene) {
     const particleDummy = new THREE.Object3D();
     const position = new THREE.Vector3();
     const color = new THREE.Color();
+    const rotation_matrix = new THREE.Matrix3();
+
+    const starData = [];
+    const particleData = [];
+    let particlePointer = 0;
+    let time = 0;
 
     for (let i = 0; i < STAR_COUNT; i++) {
-        //const y = (Math.random() * HEIGHT * 2) - HEIGHT;
-        //const x = (Math.random() * 100) + 300 + (100 - Math.abs(y)); // push stars closer to middle further from camera
-        //const z = (Math.random() * WIDTH) - (WIDTH / 2);
-        //position.set(x, y, z);
-
-        // Testing alternate star position generation, this seems fine for now though
-        // will modify if the camera animation makes this weird
         position.randomDirection(); position.multiplyScalar(THREE.MathUtils.randFloat(MIN_STAR_DISTANCE, MAX_STAR_DISTANCE));
 
         dummy.position.copy(position);
@@ -71,7 +66,7 @@ export function createStars(scene) {
         const midpoint = (Math.random() * RED_GIANT_SCALE) + RED_GIANT_OFFSET;
         starData.push({
             index: i,
-            size: Math.random() * 2.5,
+            size: Math.random() * 1.25,
             opacity: Math.random() * Math.PI * 2,
             midpoint,
             brightness: 0,
@@ -79,7 +74,6 @@ export function createStars(scene) {
         });
     }
 
-    let particlePointer = 0;
     for (let i = 0; i < PARTICLE_COUNT; i++) {
         // reserve 200 particles for explosions
         // When supernova is reached, take the next 20 particles and send them in random directions
@@ -98,7 +92,6 @@ export function createStars(scene) {
     scene.add(particleMesh);
 
     function update(delta) {
-        const rotation_matrix = new THREE.Matrix3();
         rotation_matrix.set(
             Math.cos((delta / STAR_SPIN_FACTOR)), 0, Math.sin((delta / STAR_SPIN_FACTOR)),
             0, 1, 0,
@@ -115,20 +108,20 @@ export function createStars(scene) {
 
             if (time < START_FADE_IN_TIME) {
                 color.setHex(0x000000);
-                dummy.scale.setScalar(brightness * star.size * 0.5);
+                dummy.scale.setScalar(brightness * star.size);
             } else if (time < END_FADE_IN_TIME) {
-                const scaled_brightness = (time - START_FADE_IN_TIME) * brightness;
+                const scaled_brightness = (time - START_FADE_IN_TIME) / (END_FADE_IN_TIME - START_FADE_IN_TIME) * brightness;
                 color.setRGB(scaled_brightness, scaled_brightness, scaled_brightness);
-                dummy.scale.setScalar(brightness * star.size * 0.5);
+                dummy.scale.setScalar(brightness * star.size);
             } else if (time < star.midpoint - RED_GIANT_START_OFFSET) {
                 color.setRGB(brightness, brightness, brightness);
-                dummy.scale.setScalar(brightness * star.size * 0.5);
+                dummy.scale.setScalar(brightness * star.size);
             }
             else if (time < star.midpoint) {
                 // if first time switching to turning red, store current size and begin shrinking
                 if (star.status != STATUS_REDMODE) {
                     star.status = STATUS_REDMODE;
-                    star.size = star.size * brightness * 0.5; // star.size now stores the max size of the star
+                    star.size = star.size * brightness; // star.size now stores the max size of the star
                     star.brightness = brightness; // and store brightness so that we can shift to red from this
                 }
                 const redness = (star.midpoint - time) / (RED_GIANT_START_OFFSET);
@@ -184,7 +177,7 @@ export function createStars(scene) {
             particleDummy.matrix.decompose(particleDummy.position, particleDummy.quaternion, particleDummy.scale);
             particleDummy.position.addScaledVector(particle.velocity, delta);
             particleDummy.position.applyMatrix3(rotation_matrix);
-            const scale = Math.max(0, particle.lifetime / PARTICLE_LIFETIME);
+            const scale = Math.max(0, (particle.lifetime * particle.size) / PARTICLE_LIFETIME);
             particleDummy.scale.setScalar(scale);
             particleDummy.updateMatrix();
             particleMesh.setMatrixAt(particle.index, particleDummy.matrix);
