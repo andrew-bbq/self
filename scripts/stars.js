@@ -16,10 +16,10 @@ const MAX_STAR_DISTANCE = 400;
 const STAR_SPIN_FACTOR = 30;
 
 // supernova criteria
-const RED_GIANT_OFFSET = 20; // minimum time for stars to go supernova
-const RED_GIANT_SCALE = 20 // max possible time after offset for supernova to happen
-const RED_GIANT_START_OFFSET = 20; // stars will start turning red over x seconds
-const SUPERNOVA_OFFSET = 5; // stars will go supernova x seconds after red giant has been reached
+const RED_GIANT_OFFSET = 300; // minimum time for stars to go supernova
+const RED_GIANT_SCALE = 4000; // max possible time after offset for supernova to happen
+const RED_GIANT_START_OFFSET = 120; // stars will start turning red over x seconds
+const SUPERNOVA_OFFSET = 10; // stars will go supernova x seconds after red giant has been reached
 
 const STATUS_DEFAULT = "DEFAULT";
 const STATUS_REDMODE = "REDMODE";
@@ -28,17 +28,20 @@ const STATUS_EXPLODED = "ESPLODED";
 // supernova color constants
 const SUPERNOVA_G = 0.75;
 
+// explosion constants
 const particleData = [];
-const PARTICLE_COUNT = 200;
+const PARTICLE_COUNT = 500;
 const PARTICLES_PER_EXPLOSION = 20;
+const PARTICLE_LIFETIME = 2.6;
 
 export function createStars(scene) {
     const starGeometry = new THREE.SphereGeometry(BASE_STAR_RADIUS, 16, 16);
     const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
     const instancedMesh = new THREE.InstancedMesh(starGeometry, starMaterial, STAR_COUNT);
 
-    const particleGeometry = new THREE.SphereGeometry(BASE_STAR_RADIUS / 5, 4, 4);
-    const particleMesh = new THREE.InstancedMesh(particleGeometry, starMaterial, PARTICLE_COUNT);
+    const particleGeometry = new THREE.SphereGeometry(BASE_STAR_RADIUS, 8, 8);
+    const particleMaterial = new THREE.MeshBasicMaterial({ color: 0x00a5ff });
+    const particleMesh = new THREE.InstancedMesh(particleGeometry, particleMaterial, PARTICLE_COUNT);
 
     const dummy = new THREE.Object3D();
     const particleDummy = new THREE.Object3D();
@@ -86,11 +89,13 @@ export function createStars(scene) {
         particleData.push({
             index: i,
             velocity: new THREE.Vector3(0, 0, 0),
-            size: 1
+            size: 1,
+            lifetime: 0.0,
         });
     }
 
     scene.add(instancedMesh);
+    scene.add(particleMesh);
 
     function update(delta) {
         const rotation_matrix = new THREE.Matrix3();
@@ -100,6 +105,7 @@ export function createStars(scene) {
             -Math.sin((delta / STAR_SPIN_FACTOR)), 0, Math.cos((delta / STAR_SPIN_FACTOR))
         );
         time += delta;
+        // UPDATE STARS
         starData.forEach((star) => {
             instancedMesh.getMatrixAt(star.index, dummy.matrix);
             dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale);
@@ -139,19 +145,18 @@ export function createStars(scene) {
                 if (star.status != STATUS_EXPLODED) {
                     star.status = STATUS_EXPLODED;
                     dummy.scale.setScalar(0);
-                    // grab next n particles
+                    // grab next PARTICLES_PER_EXPLOSION particles
                     particleData
                         .slice(particlePointer, particlePointer + PARTICLES_PER_EXPLOSION)
                         .forEach((particle) => {
-                            particle.velocity = new THREE.Vector3(Math.random(), Math.random(), Math.random());
-                            particle.size = 1;
-                            // TODO: Make this work
-                            // particleDummy.matrix.decompose(particleDummy.position, particleDummy.quaternion, particleDummy.scale);
-                            // particleDummy.position = dummy.position.copy();
-                            // particleDummy.scale.setScalar(1);
-                            // particleMesh.setMatrixAt(particle.index, particleDummy);
+                            particle.velocity = new THREE.Vector3().randomDirection();
+                            particle.lifetime = PARTICLE_LIFETIME;
+                            particle.size = star.size;
+                            particleDummy.position.copy(dummy.position);
+                            particleDummy.scale.setScalar(star.size * 0.25);
+                            particleDummy.updateMatrix();
+                            particleMesh.setMatrixAt(particle.index, particleDummy.matrix);
                         });
-                    particleMesh.instanceMatrix.needsUpdate = true;
 
                     // move pointer
                     particlePointer = (particlePointer + PARTICLES_PER_EXPLOSION) % PARTICLE_COUNT;
@@ -171,6 +176,20 @@ export function createStars(scene) {
             //instancedMesh.scale.set(brightness * star.size, brightness * star.size, brightness * star.size);
 
         });
+        // UPDATE EXPLOSION PARTICLES
+        particleData.forEach((particle) => {
+            if (particle.lifetime <= 0) return;
+            particle.lifetime -= delta;
+            particleMesh.getMatrixAt(particle.index, particleDummy.matrix);
+            particleDummy.matrix.decompose(particleDummy.position, particleDummy.quaternion, particleDummy.scale);
+            particleDummy.position.addScaledVector(particle.velocity, delta);
+            particleDummy.position.applyMatrix3(rotation_matrix);
+            const scale = Math.max(0, particle.lifetime / PARTICLE_LIFETIME);
+            particleDummy.scale.setScalar(scale);
+            particleDummy.updateMatrix();
+            particleMesh.setMatrixAt(particle.index, particleDummy.matrix);
+        });
+        particleMesh.instanceMatrix.needsUpdate = true;
         instancedMesh.instanceColor.needsUpdate = true;
         instancedMesh.instanceMatrix.needsUpdate = true;
     }
