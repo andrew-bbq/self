@@ -5,11 +5,9 @@ const ROCK_COUNT = 8;
 const ROCK_SIZE = 0.3;
 const ROCK_VARIANCE = 0.25;
 
-const SMOKE_PLANES = 3;
-const SMOKE_HEIGHT = 50;
-const SMOKE_BOTTOM_WIDTH = 1.2;
-const SMOKE_TOP_WIDTH = 3.3;
-const SMOKE_SEGMENTS = 64;
+const SMOKE_HEIGHT = 80;
+const SMOKE_BOTTOM_RADIUS = 0.9;
+const SMOKE_TOP_RADIUS = 4.5;
 
 const PLANET_RADIUS = 50;
 const TREE_COUNT = 16;
@@ -26,7 +24,7 @@ export function createPlanet(scene) {
     group.position.set(60, -95, 80);
 
     const campfireDir = new THREE.Vector3(2.6, 4.5, -4.5).normalize();
-    const { campfire, flame, innerFlame, light } = makeCampfire();
+    const { campfire, flame, innerFlame, light, smokeMat } = makeCampfire();
     campfire.position.copy(campfireDir.clone().multiplyScalar(PLANET_RADIUS));
     campfire.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), campfireDir);
     group.add(campfire);
@@ -62,6 +60,7 @@ export function createPlanet(scene) {
     function update(delta) {
         group.rotateOnAxis(campfireDir, delta * 0.07);
         time += delta;
+        smokeMat.uniforms.time.value = time;
         const flicker = (1 + 0.25 * Math.sin(time * 9.3) + 0.15 * Math.sin(time * 14.7)) * 5;
 
         if (time < TITLE_FADE_START) {
@@ -112,77 +111,49 @@ function makeCampfire() {
     light.position.y = 2.5;
     campfire.add(light);
 
-    const smoke = makeSmoke();
-    smoke.position.y = 2;
+    const { smokeMat, smoke } = makeSmoke();
+    smoke.position.y = SMOKE_HEIGHT / 2 + 2.5;
     campfire.add(smoke);
 
-    return { campfire, flame, innerFlame, light, smoke };
+    return { campfire, flame, innerFlame, light, smoke, smokeMat };
 }
 
 function smokeVertexShader() {
     return `
+        varying vec2 vUv;
+        uniform float time;
         void main() {
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            vUv = uv;
+            vec3 newPosition = position;
+            newPosition.x = sin((position.y - time)) / 1.8 + newPosition.x;
+            newPosition.z = cos((position.y - time)) / 1.8 + newPosition.z;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
         }
     `
 }
 
 function smokeFragmentShader() {
     return `
-        uniform vec3 diffuse;
+        varying vec2 vUv;
         void main() {
-            gl_FragColor = vec4(diffuse, 1.0);
+            gl_FragColor = vec4(0.35, 0.35, 0.35, 0.8 - vUv.y);
         }
     `
 }
 
-function makeSmokeStrip() {
-    const positions = [];
-    const uvs = [];
-    const indices = [];
-
-    for (let i = 0; i <= SMOKE_SEGMENTS; i++) {
-        const t = i / SMOKE_SEGMENTS;
-        const y = t * SMOKE_HEIGHT;
-        const halfWidth = (SMOKE_BOTTOM_WIDTH * (1 - t) + SMOKE_TOP_WIDTH * t) / 2;
-
-        positions.push(-halfWidth, y, 0);
-        positions.push( halfWidth, y, 0);
-        uvs.push(0, t);
-        uvs.push(1, t);
-    }
-
-    for (let i = 0; i < SMOKE_SEGMENTS; i++) {
-        const a = i * 2,     b = i * 2 + 1;
-        const c = (i+1) * 2, d = (i+1) * 2 + 1;
-        indices.push(a, b, c);
-        indices.push(b, d, c);
-    }
-
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
-    geo.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
-    geo.setIndex(indices);
-    return geo;
-}
-
 function makeSmoke() {
-    const group = new THREE.Group();
-    const mat = new THREE.ShaderMaterial({
+    const smokeMat = new THREE.ShaderMaterial({
         vertexShader: smokeVertexShader(),
         fragmentShader: smokeFragmentShader(),
         uniforms: {
-            diffuse: { value: new THREE.Color(0xffffff) }
+            time: { value: 0.0 }
         },
+        transparent: true
     });
 
-    for (let i = 0; i < SMOKE_PLANES; i++) {
-        const mesh = new THREE.Mesh(makeSmokeStrip(), mat);
-        mesh.rotation.y = (i / SMOKE_PLANES) * Math.PI;
-        group.add(mesh);
-    }
-
-    return group;
+    const geo = new THREE.CylinderGeometry(SMOKE_TOP_RADIUS, SMOKE_BOTTOM_RADIUS, SMOKE_HEIGHT, 4, 30);
+    const smoke = new THREE.Mesh(geo, smokeMat);
+    return { smokeMat, smoke };
 }
 
 const BASE_TREE_HEIGHT = 10;

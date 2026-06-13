@@ -26,7 +26,7 @@ const STATUS_EXPLODED = "ESPLODED";
 const SUPERNOVA_G = 0.75;
 
 // explosion constants
-const PARTICLE_COUNT = 400;
+const PARTICLE_COUNT = 600;
 const PARTICLES_PER_EXPLOSION = 20;
 const PARTICLE_LIFETIME = 2.6;
 
