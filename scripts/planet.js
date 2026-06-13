@@ -5,6 +5,12 @@ const ROCK_COUNT = 8;
 const ROCK_SIZE = 0.3;
 const ROCK_VARIANCE = 0.25;
 
+const SMOKE_PLANES = 3;
+const SMOKE_HEIGHT = 50;
+const SMOKE_BOTTOM_WIDTH = 1.2;
+const SMOKE_TOP_WIDTH = 3.3;
+const SMOKE_SEGMENTS = 64;
+
 const PLANET_RADIUS = 50;
 const TREE_COUNT = 16;
 const FOLIAGE_COUNT = 8;
@@ -106,7 +112,77 @@ function makeCampfire() {
     light.position.y = 2.5;
     campfire.add(light);
 
-    return { campfire, flame, innerFlame, light };
+    const smoke = makeSmoke();
+    smoke.position.y = 2;
+    campfire.add(smoke);
+
+    return { campfire, flame, innerFlame, light, smoke };
+}
+
+function smokeVertexShader() {
+    return `
+        void main() {
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `
+}
+
+function smokeFragmentShader() {
+    return `
+        uniform vec3 diffuse;
+        void main() {
+            gl_FragColor = vec4(diffuse, 1.0);
+        }
+    `
+}
+
+function makeSmokeStrip() {
+    const positions = [];
+    const uvs = [];
+    const indices = [];
+
+    for (let i = 0; i <= SMOKE_SEGMENTS; i++) {
+        const t = i / SMOKE_SEGMENTS;
+        const y = t * SMOKE_HEIGHT;
+        const halfWidth = (SMOKE_BOTTOM_WIDTH * (1 - t) + SMOKE_TOP_WIDTH * t) / 2;
+
+        positions.push(-halfWidth, y, 0);
+        positions.push( halfWidth, y, 0);
+        uvs.push(0, t);
+        uvs.push(1, t);
+    }
+
+    for (let i = 0; i < SMOKE_SEGMENTS; i++) {
+        const a = i * 2,     b = i * 2 + 1;
+        const c = (i+1) * 2, d = (i+1) * 2 + 1;
+        indices.push(a, b, c);
+        indices.push(b, d, c);
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+    geo.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2));
+    geo.setIndex(indices);
+    return geo;
+}
+
+function makeSmoke() {
+    const group = new THREE.Group();
+    const mat = new THREE.ShaderMaterial({
+        vertexShader: smokeVertexShader(),
+        fragmentShader: smokeFragmentShader(),
+        uniforms: {
+            diffuse: { value: new THREE.Color(0xffffff) }
+        },
+    });
+
+    for (let i = 0; i < SMOKE_PLANES; i++) {
+        const mesh = new THREE.Mesh(makeSmokeStrip(), mat);
+        mesh.rotation.y = (i / SMOKE_PLANES) * Math.PI;
+        group.add(mesh);
+    }
+
+    return group;
 }
 
 const BASE_TREE_HEIGHT = 10;
