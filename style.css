@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'ITCAvantGardeStd';
+    src: url('assets/fonts/ITCAvantGardeStd-Md.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 html,
 body,
 canvas {
@@ -5,15 +14,94 @@ canvas {
     padding: 0;
     width: 100%;
     height: 100%;
-    font-size: 0;
+}
+
+.title-bar {
+    position: fixed;
+    z-index: 10;
+    width: 28vw;
+    height: 0;
+    border-top: 1px dashed white;
+
+    animation: title-fade 10.5s ease-in forwards;
+}
+
+#top-bar {
+    left: 6vw;
+    top: 35vh;
+}
+
+#bottom-bar {
+    left: 6vw;
+    top: 80vh;
+}
+
+.menu-option p:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.menu-option p::before {
+    content: ">>>>>>>>>";
+    right: 100%;
+    padding-right: 0.85em;
+    opacity: 0;
+    letter-spacing: -0.54em;
+}
+
+.menu-option p::after {
+    content: "<<<<<<<<<";
+    left: 100%;
+    padding-left: 0.35em;
+    opacity: 0;
+    letter-spacing: -0.54em;
+}
+
+.menu-option p:hover::before,
+.menu-option p:hover::after {
+    opacity: 1;
+}
+
+.menu-option {
+    margin: 0;
+    padding: 0;
+    font-family: 'ITCAvantGardeStd';
+    white-space: nowrap;
+    position: fixed;
+    left: 20vw;
+    width: 20vw;
+    font-size: 3vh;
+    height: 3vh;
+    z-index: 10;
+    color: #ff8545;
+    text-align: center;
+    transform: translateX(-50%);
+    letter-spacing: 0.07em;
+    animation: title-fade 10.5s ease-in forwards;
+}
+
+#about-me {
+    top: 44vh;
+}
+
+#education {
+    top: 50vh;
+}
+
+#experience {
+    top: 56vh;
+}
+
+#projects {
+    top: 62vh;
 }
 
 #andrew-title-overlay {
     position: fixed;
-    top: 10vh;
+    top: 9vh;
     left: 11vw;
     width: 17vw;
-    height: 50vh;
+    height: 10vh;
     background-image: url('./assets/andrew_title.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -29,7 +117,7 @@ canvas {
     top: 18vh;
     left: 5vw;
     width: 30vw;
-    height: 50vh;
+    height: 15vh;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: top left;
@@ -97,7 +185,7 @@ canvas {
 
 #bennett-n2top {
     background-image: url('./assets/bennett_title/n2top.png');
-    animation: title-fade 10.5s ease-in forwards, float-up-left 1000s ease-in forwards;
+    animation: title-fade 10.5s ease-in forwards, float-up-right-high 1000s ease-in forwards;
 }
 
 @keyframes float-up-left {
@@ -106,7 +194,7 @@ canvas {
     }
 
     100% {
-        transform: translate(9%, -12%) rotate(-13deg);
+        transform: translate(-7%, -8vh) rotate(-13deg);
     }
 }
 

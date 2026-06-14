@@ -21,7 +21,7 @@ export function createPlanet(scene) {
     const planetGeo = new THREE.SphereGeometry(PLANET_RADIUS, 32, 32);
     const planetMat = new THREE.MeshLambertMaterial({ color: 0x523528 });
     group.add(new THREE.Mesh(planetGeo, planetMat));
-    group.position.set(60, -95, 80);
+    group.position.set(60, -95, 100);
 
     const campfireDir = new THREE.Vector3(2.6, 4.5, -4.5).normalize();
     const { campfire, flame, innerFlame, light, smokeMat } = makeCampfire();
@@ -135,8 +135,10 @@ function smokeVertexShader() {
 function smokeFragmentShader() {
     return `
         varying vec2 vUv;
+        uniform float time;
         void main() {
-            gl_FragColor = vec4(0.35, 0.35, 0.35, 0.8 - vUv.y);
+            float alpha = (0.8 - vUv.y) * clamp(time - 9.9, 0.0, 1.0);
+            gl_FragColor = vec4(0.35, 0.35, 0.35, alpha);
         }
     `
 }
@@ -145,10 +147,8 @@ function makeSmoke() {
     const smokeMat = new THREE.ShaderMaterial({
         vertexShader: smokeVertexShader(),
         fragmentShader: smokeFragmentShader(),
-        uniforms: {
-            time: { value: 0.0 }
-        },
-        transparent: true
+        uniforms: { time: { value: 0.0 } },
+        transparent: true,
     });
 
     const geo = new THREE.CylinderGeometry(SMOKE_TOP_RADIUS, SMOKE_BOTTOM_RADIUS, SMOKE_HEIGHT, 4, 30);
