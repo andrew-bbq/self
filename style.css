@@ -10,6 +10,7 @@
 html,
 body,
 canvas {
+    background-color: black;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -42,6 +43,7 @@ canvas {
 }
 
 .menu-option p::before {
+    margin-top: -5vh;
     content: ">>>>>>>>>";
     right: 100%;
     padding-right: 0.85em;
@@ -50,6 +52,7 @@ canvas {
 }
 
 .menu-option p::after {
+    margin-top: -5vh;
     content: "<<<<<<<<<";
     left: 100%;
     padding-left: 0.35em;

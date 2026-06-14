@@ -4,7 +4,7 @@ import { START_FADE_IN_TIME, END_FADE_IN_TIME, TITLE_FADE_START } from './consta
 const WIDTH = window.innerWidth;
 const HEIGHT = window.innerHeight;
 
-const STAR_COUNT = (WIDTH + HEIGHT) * 2;
+const STAR_COUNT = 8000;
 const BASE_STAR_RADIUS = Math.min(1, WIDTH / 1300);
 const MIN_STAR_DISTANCE = 300;
 const MAX_STAR_DISTANCE = 400;
