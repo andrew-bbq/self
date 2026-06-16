@@ -1,3 +1,6 @@
+const UNTRANSLATED = "<!> Untranslated Nomai writing <!>"
+const ABOUT_ME = "Andrew Bennett is a software engineer currently at Expedia Group."
+
 function writeAboutMe() {
     const spiral = document.getElementById("about-me-spiral-1");
     spiral.classList.add("active-spiral");

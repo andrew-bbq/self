@@ -6,6 +6,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'VT323';
+    src: url('assets/fonts/VT323-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 html,
 body,
@@ -277,14 +285,14 @@ canvas {
     transform: scale(0.5);
     position: fixed;
     right: 9vw;
-    top: 20vh;
+    top: 17vh;
     width: 40vw;
     height: 40vh;
     z-index: 20;
     visibility: hidden;
 }
 
-.nomai-writing-main-path {
+.nomai-writing-main-path.unread {
     fill: none;
     stroke: #9aa4fe;
     stroke-width: 6;
@@ -294,10 +302,12 @@ canvas {
     stroke-dashoffset: 1;
 }
 
+.nomai-writing-blur.unread {
+    stroke: #6b5fee;
+}
 
 .nomai-writing-blur {
     fill: none;
-    stroke: #bbc1fc;
     stroke-width: 18;
     opacity: 0.3;
     stroke-linecap: round;
@@ -311,25 +321,56 @@ canvas {
     cursor: url('./assets/translator-xhair.png') 25 25, pointer;
 }
 
+.nomai-scan-group {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.active-spiral:hover .nomai-scan-group {
+    opacity: 1;
+}
+
+.nomai-scan-line {
+    stroke: #9aa4fe;
+    stroke-width: 2;
+}
+
+#translator-popup img {
+    width: 100%;
+}
+
 #translator-popup {
     position: fixed;
     bottom: -2vh;
     left: 50%;
     transform: translateX(-50%) translateY(110%);
-    max-height: 50vh;
     pointer-events: none;
     width: 80vw;
     transition: transform 0.4s ease;
     z-index: 20;
 }
 
+#translator-popup p {
+    font-family: 'VT323';
+    text-align: center;
+    font-size: 1.6vw;
+    position: absolute;
+    color: #24579e;
+    text-shadow: 0 0 12px #007733;
+    z-index: 21;
+    bottom: 34%;
+    left: 23%;
+    transform: translateY(-50%);
+    margin: 0;
+}
+
 .active-spiral:hover ~ #translator-popup {
     transform: translateX(-50%) translateY(0);
 }
 
-.nomai-writing-main-path.spiral-drawing,
+.nomai-writing-main-path.unread.spiral-drawing,
 .nomai-writing-blur.spiral-drawing {
-    animation: spiral-draw 2s ease-out forwards;
+    animation: spiral-draw 1s ease-out forwards;
 }
 
 @keyframes spiral-draw {
