@@ -281,21 +281,54 @@ canvas {
     width: 40vw;
     height: 40vh;
     z-index: 20;
-    pointer-events: none;
     visibility: hidden;
 }
 
 .nomai-writing-main-path {
     fill: none;
-    stroke: white;
-    stroke-width: 10;
+    stroke: #9aa4fe;
+    stroke-width: 6;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
 }
 
-.nomai-writing-main-path.spiral-drawing {
+
+.nomai-writing-blur {
+    fill: none;
+    stroke: #bbc1fc;
+    stroke-width: 18;
+    opacity: 0.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    z-index: 5;
+}
+
+.active-spiral:hover {
+    cursor: url('./assets/translator-xhair.png') 25 25, pointer;
+}
+
+#translator-popup {
+    position: fixed;
+    bottom: -2vh;
+    left: 50%;
+    transform: translateX(-50%) translateY(110%);
+    max-height: 50vh;
+    pointer-events: none;
+    width: 80vw;
+    transition: transform 0.4s ease;
+    z-index: 20;
+}
+
+.active-spiral:hover ~ #translator-popup {
+    transform: translateX(-50%) translateY(0);
+}
+
+.nomai-writing-main-path.spiral-drawing,
+.nomai-writing-blur.spiral-drawing {
     animation: spiral-draw 2s ease-out forwards;
 }
 

@@ -1,8 +1,12 @@
 function writeAboutMe() {
     const spiral = document.getElementById("about-me-spiral-1");
+    spiral.classList.add("active-spiral");
     spiral.style.visibility = "visible";
     console.log(spiral.style.visibility);
-    const path = spiral.querySelector(".nomai-writing-main-path");
-    path.classList.remove("spiral-drawing");
-    path.classList.add("spiral-drawing");
+    const mainPath = spiral.querySelector(".nomai-writing-main-path");
+    const glowPath = spiral.querySelector(".nomai-writing-blur");
+    mainPath.classList.remove("spiral-drawing");
+    mainPath.classList.add("spiral-drawing");
+    glowPath.classList.remove("spiral-drawing");
+    glowPath.classList.add("spiral-drawing");
 }
