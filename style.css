@@ -19,6 +19,7 @@ canvas {
 }
 
 .title-bar {
+    min-width: 180px;
     position: fixed;
     z-index: 10;
     width: 28vw;
@@ -38,12 +39,12 @@ canvas {
     top: 80vh;
 }
 
-.menu-option p:hover {
+.menu-option a:hover {
     color: white;
     cursor: pointer;
 }
 
-.menu-option p::before {
+.menu-option a::before {
     margin-top: -5vh;
     content: ">>>>>>>>>";
     right: 100%;
@@ -52,7 +53,7 @@ canvas {
     letter-spacing: -0.56em;
 }
 
-.menu-option p::after {
+.menu-option a::after {
     margin-top: -5vh;
     content: "<<<<<<<<<";
     left: 100%;
@@ -61,8 +62,8 @@ canvas {
     letter-spacing: -0.56em;
 }
 
-.menu-option p:hover::before,
-.menu-option p:hover::after {
+.menu-option a:hover::before,
+.menu-option a:hover::after {
     opacity: 1;
 }
 
@@ -85,31 +86,31 @@ canvas {
 }
 
 #about-me {
-    top: 44vh;
+    top: 46vh;
 }
 
 #education {
-    top: 50vh;
+    top: 52vh;
 }
 
 #experience {
-    top: 56vh;
+    top: 58vh;
 }
 
 #projects {
-    top: 62vh;
+    top: 64vh;
 }
 
 #andrew-title-overlay {
     position: fixed;
     top: 9vh;
-    left: 11vw;
+    left: 12vw;
     width: 17vw;
     height: 10vh;
     background-image: url('./assets/andrew_title.png');
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: top left;
+    background-position: center;
     z-index: 10;
     pointer-events: none;
 
@@ -119,13 +120,13 @@ canvas {
 .bennett-title-overlay {
     position: fixed;
     top: 18vh;
-    left: 5vw;
+    left: 5.5vw;
     width: 30vw;
     height: 15vh;
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: top left;
-    z-index: 10;
+    background-position: center;
+    z-index: 11;
     pointer-events: none;
 
     animation: title-fade 10.5s ease-in forwards;
@@ -273,9 +274,10 @@ canvas {
 }
 
 #about-me-spiral-1 {
+    transform: scale(0.5);
     position: fixed;
-    right: 20vw;
-    top: 5vh;
+    right: 9vw;
+    top: 20vh;
     width: 40vw;
     height: 40vh;
     z-index: 20;
@@ -283,20 +285,18 @@ canvas {
     visibility: hidden;
 }
 
-#spiral-overlay svg {
-    width: 30vh;
-    height: 20vw;
-}
-
-.nomai-writing {
+.nomai-writing-main-path {
     fill: none;
     stroke: white;
-    stroke-width: 4;
+    stroke-width: 10;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
-    animation: spiral-draw 4s ease-out forwards;
+}
+
+.nomai-writing-main-path.spiral-drawing {
+    animation: spiral-draw 2s ease-out forwards;
 }
 
 @keyframes spiral-draw {

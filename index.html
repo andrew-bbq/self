@@ -6,6 +6,7 @@
     <title>Andrew Bennett (Go Play Outer Wilds)</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <script src="./scripts/writing.js"></script>
 </head>
 
 <body>
@@ -23,31 +24,36 @@
     <div id="top-bar" class="title-bar"></div>
     <div id="bottom-bar" class="title-bar"></div>
     <div class="menu-option" id="about-me">
-        <p>ABOUT ME</p>
+        <a onclick="writeAboutMe()">ABOUT ME</a>
     </div>
     <div class="menu-option" id="education">
-        <p>EDUCATION</p>
+        <a>EDUCATION</a>
     </div>
     <div class="menu-option" id="experience">
-        <p>EXPERIENCE</p>
+        <a>EXPERIENCE</a>
     </div>
     <div class="menu-option" id="projects">
-        <p>PROJECTS</p>
+        <a>PROJECTS</a>
     </div>
     <div id="about-me-spiral-1">
         <svg viewBox="-190 -240 260 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path class="nomai-writing" pathLength="1"
-                d="M -81 82 Q -25 55 12 7 Q 57 -49 45 -148 Q 31 -217 -43 -225 Q -114 -230 -148 -182 Q -180 -130 -156 -91 Q -125 -55 -95 -55 Q -36 -58 -36 -98" />
+            <defs>
+                <pattern id="nomai-texture" width="30" height="30">
+                    <image href="./assets/nomai-noise.png" width="30" height="30" />
+                </pattern>
+            </defs>
+            <path class="nomai-writing-main-path" pathLength="1"
+                d="M -81 82 Q -25 55 12 7 Q 57 -49 45 -148 Q 31 -217 -43 -225 Q -114 -230 -148 -182 Q -180 -130 -156 -91 Q -125 -55 -95 -55 Q -36 -58 -36 -98">
         </svg>
     </div>
     <script type=" importmap">
-                {
-                "imports": {
+        {
+            "imports": {
                 "three": "https://cdn.jsdelivr.net/npm/three@v0.149.0/build/three.module.js",
                 "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.149.0/examples/jsm/"
-                }
-                }
-                </script>
+            }
+        }
+    </script>
     <script src="index.js" type="module"></script>
 </body>
 
