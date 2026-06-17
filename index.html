@@ -35,8 +35,9 @@
     <div class="menu-option" id="projects">
         <a onclick="writeSpiral('projects-spiral-1')">PROJECTS</a>
     </div>
-    <div id="about-me-spiral-1">
-        <svg viewBox="-180 -250 260 350" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <div id="about-me-spiral-1" onmouseover="showSpiralText('about-me-spiral-1')"
+        onclick="translateSpiral('about-me-spiral-1')">
+        <svg viewBox="-190 -250 260 350" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
                 <filter id="scribble">
                     <feTurbulence type="turbulence" baseFrequency="0.8" numOctaves="10" result="noise" />
@@ -53,19 +54,19 @@
                 d="M -81 82 Q -25 55 12 7 Q 57 -49 45 -148 Q 31 -217 -43 -225 Q -114 -230 -148 -182 Q -180 -130 -156 -91 Q -125 -55 -95 -55 Q -36 -58 -36 -98" />
             <g class="nomai-scan-group">
                 <line class="nomai-scan-line" x1="0" y1="-20" x2="0" y2="20">
-                    <animateMotion dur="2s" repeatCount="indefinite" rotate="auto" keyPoints="0;1;0" keyTimes="0;0.5;1"
-                        calcMode="linear">
+                    <animateMotion dur="1.5s" repeatCount="indefinite" rotate="auto" keyPoints="0;1;0"
+                        keyTimes="0;0.5;1" calcMode="linear">
                         <mpath href="#nomai-path-spiral-1" />
                     </animateMotion>
                 </line>
                 <line class="nomai-scan-line" x1="0" y1="-25" x2="0" y2="25">
-                    <animateMotion dur="2s" repeatCount="indefinite" rotate="auto" keyPoints="1;0;1" keyTimes="0;0.5;1"
-                        calcMode="linear">
+                    <animateMotion dur="1.5s" repeatCount="indefinite" rotate="auto" keyPoints="1;0;1"
+                        keyTimes="0;0.5;1" calcMode="linear">
                         <mpath href="#nomai-path-spiral-1" />
                     </animateMotion>
                 </line>
                 <line class="nomai-scan-line" x1="0" y1="-15" x2="0" y2="15">
-                    <animateMotion dur="3s" repeatCount="indefinite" rotate="auto" keyPoints="1;0;1" keyTimes="0;0.5;1"
+                    <animateMotion dur="2s" repeatCount="indefinite" rotate="auto" keyPoints="1;0;1" keyTimes="0;0.5;1"
                         calcMode="linear">
                         <mpath href="#nomai-path-spiral-1" />
                     </animateMotion>
@@ -74,7 +75,7 @@
         </svg>
     </div>
     <div id="translator-popup">
-        <p>&lt;!&gt; Untranslated Nomai writing &lt;!&gt;</p>
+        <p id="translator-text">&lt;!&gt; Untranslated Nomai writing &lt;!&gt;</p>
         <img src="./assets/translator.png" alt="" />
     </div>
     <script type="importmap">

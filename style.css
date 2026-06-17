@@ -94,19 +94,19 @@ canvas {
 }
 
 #about-me {
-    top: 46vh;
+    top: 47vh;
 }
 
 #education {
-    top: 52vh;
+    top: 53vh;
 }
 
 #experience {
-    top: 58vh;
+    top: 59vh;
 }
 
 #projects {
-    top: 64vh;
+    top: 65vh;
 }
 
 #andrew-title-overlay {
@@ -356,15 +356,15 @@ canvas {
     font-size: 1.6vw;
     position: absolute;
     color: #24579e;
-    text-shadow: 0 0 12px #007733;
+    text-shadow: 0 0 12px #003377;
     z-index: 21;
     bottom: 34%;
-    left: 23%;
-    transform: translateY(-50%);
+    left: 22%;
+    transform: translateY(-50%) scaleX(1.2);
     margin: 0;
 }
 
-.active-spiral:hover ~ #translator-popup {
+.active-spiral:hover~#translator-popup {
     transform: translateX(-50%) translateY(0);
 }
 
