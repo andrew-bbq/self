@@ -282,27 +282,40 @@ canvas {
 }
 
 #about-me-spiral-1 {
-    transform: scale(0.5);
+    transform: translateY(-50%) scale(0.5);
     position: fixed;
     right: 9vw;
-    top: 17vh;
+    top: 37vh;
     width: 40vw;
     height: 40vh;
     z-index: 20;
     visibility: hidden;
 }
 
-.nomai-writing-main-path.unread {
+.nomai-writing-main-path {
     fill: none;
-    stroke: #9aa4fe;
     stroke-width: 6;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
+    z-index: 6;
+    transition: stroke 0.8s ease;
+}
+
+.nomai-writing-main-path.unread {
+    stroke: #ff8c40;
+}
+
+.nomai-writing-main-path.read {
+    stroke: #9aa4fe;
 }
 
 .nomai-writing-blur.unread {
+    stroke: #ff8c40;
+}
+
+.nomai-writing-blur.read {
     stroke: #6b5fee;
 }
 
@@ -315,6 +328,7 @@ canvas {
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     z-index: 5;
+    transition: stroke 0.8s ease;
 }
 
 .active-spiral:hover {
@@ -358,17 +372,18 @@ canvas {
     color: #24579e;
     text-shadow: 0 0 12px #003377;
     z-index: 21;
-    bottom: 34%;
-    left: 22%;
-    transform: translateY(-50%) scaleX(1.2);
+    top: 64%;
+    left: 37%;
+    transform: translate(-50%, -50%) scaleX(1.2);
     margin: 0;
+    white-space: pre-line;
 }
 
 .active-spiral:hover~#translator-popup {
     transform: translateX(-50%) translateY(0);
 }
 
-.nomai-writing-main-path.unread.spiral-drawing,
+.nomai-writing-main-path.spiral-drawing,
 .nomai-writing-blur.spiral-drawing {
     animation: spiral-draw 1s ease-out forwards;
 }

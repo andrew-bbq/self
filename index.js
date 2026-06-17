@@ -3,6 +3,7 @@ import { createStars } from './scripts/stars.js';
 import { createBackground } from './scripts/background.js';
 import { CAMERA_END_PAN, CAMERA_START_PAN, SOFT_KEYFRAME_BUFFER } from './scripts/constants.js';
 import { createPlanet } from './scripts/planet.js';
+import { updateWriting } from './scripts/writing.js';
 
 const WIDTH = window.innerWidth;
 const HEIGHT = window.innerHeight;
@@ -37,6 +38,7 @@ function render() {
     stars.update(delta);
     background.update(delta);
     planet.update(delta);
+    updateWriting(delta);
 
     camera_animation.update(delta);
     renderer.render(scene, camera);
