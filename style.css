@@ -292,9 +292,35 @@ canvas {
     visibility: hidden;
 }
 
+#education-spirals {
+    right: 9vw;
+    top: 48vh;
+}
+
+#education-spiral-1 {
+    transform: translateY(-50%) scale(0.5);
+    position: fixed;
+    right: 9vw;
+    top: 48vh;
+    width: 40vw;
+    z-index: 20;
+    visibility: hidden;
+}
+
+
+#education-spiral-2 {
+    transform: translateY(-50%) scale(0.5);
+    position: fixed;
+    right: 30vw;
+    top: 34vh;
+    width: 15vw;
+    z-index: 20;
+    visibility: hidden;
+}
+
 .nomai-writing-main-path {
     fill: none;
-    stroke-width: 6;
+    stroke-width: 4;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 1;
@@ -302,6 +328,7 @@ canvas {
     z-index: 6;
     transition: stroke 0.8s ease;
 }
+
 
 .nomai-writing-main-path.unread {
     stroke: #ff8c40;
@@ -372,7 +399,7 @@ canvas {
     color: #24579e;
     text-shadow: 0 0 12px #003377;
     z-index: 21;
-    top: 64%;
+    top: 67%;
     left: 37%;
     transform: translate(-50%, -50%) scaleX(1.2);
     margin: 0;
