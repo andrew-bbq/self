@@ -5,17 +5,14 @@ import { CAMERA_END_PAN, CAMERA_START_PAN, SOFT_KEYFRAME_BUFFER } from './script
 import { createPlanet } from './scripts/planet.js';
 import { updateWriting } from './scripts/writing.js';
 
-const WIDTH = window.innerWidth;
-const HEIGHT = window.innerHeight;
-
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(WIDTH, HEIGHT);
+renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
 
-const camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT);
+const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight);
 let camera_animation = softKeyframeVector3(
     camera,
     "lookAt",
@@ -31,6 +28,17 @@ const background = createBackground(scene);
 const planet = createPlanet(scene);
 
 const clock = new THREE.Clock();
+
+function resizeRenderer() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+}
+
+window.addEventListener('resize', resizeRenderer);
 
 function render() {
     const delta = clock.getDelta();
