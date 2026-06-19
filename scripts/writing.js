@@ -9,12 +9,16 @@ const ABOUT_ME_SPIRAL_1_ID = "about-me-spiral-1";
 const EDUCATION_SPIRAL_1_ID = "education-spiral-1";
 const EDUCATION_SPIRAL_2_ID = "education-spiral-2";
 const EXPERIENCE_SPIRAL_1_ID = "experience-spiral-1";
+const EXPERIENCE_SPIRAL_2_ID = "experience-spiral-2";
+const EXPERIENCE_SPIRAL_3_ID = "experience-spiral-3";
 const PROJECTS_SPIRAL_1_ID = "projects-spiral-1";
 
 
 // when {key} is translated, open {value}
 const CHILD_SPIRAL_MAP = {
     [EDUCATION_SPIRAL_1_ID]: EDUCATION_SPIRAL_2_ID,
+    [EXPERIENCE_SPIRAL_1_ID]: EXPERIENCE_SPIRAL_2_ID,
+    [EXPERIENCE_SPIRAL_2_ID]: EXPERIENCE_SPIRAL_3_ID,
 }
 
 const DEFAULT_SPIRAL_FILTER = {
@@ -119,8 +123,8 @@ SPIRAL_DATA.forEach(setupSpiral);
 // END GLYPH SETUP BLOCK
 
 const ID_TO_MESSAGE_MAP = {
-    [ABOUT_ME_SPIRAL_1_ID]: "This is the about me section.\nI will write about myself here",
-    [EDUCATION_SPIRAL_1_ID]: "Andrew has a bachelor's degree in computer science\nand a certificate in game design\nfrom the University of Wisconsin, Madison.",
+    [ABOUT_ME_SPIRAL_1_ID]: "Andrew Bennett is a software engineer from Wisconsin.\nHe lives in Seattle right now.",
+    [EDUCATION_SPIRAL_1_ID]: "Andrew has a bachelor's degree in computer science\nand a certificate in game design\nfrom the University of Wisconsin, Madison (2018-2021).",
     [EDUCATION_SPIRAL_2_ID]: "His GPA was good... probably.",
 }
 
