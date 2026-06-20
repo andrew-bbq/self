@@ -349,9 +349,18 @@ canvas {
 
 #about-me-spiral-2 {
     right: 17%;
-    top: 15%;
+    top: 16%;
     position: absolute;
     width: 30%;
+    z-index: 20;
+    visibility: hidden;
+}
+
+#about-me-spiral-3 {
+    right: 3.5%;
+    top: 10%;
+    position: absolute;
+    width: 20%;
     z-index: 20;
     visibility: hidden;
 }
@@ -422,6 +431,27 @@ canvas {
     right: 65%;
     width: 50%;
     height: 50%;
+    position: absolute;
+    visibility: hidden;
+}
+
+#project-spirals {
+    height: 100%;
+    position: fixed;
+    right: 9vw;
+    top: 48vh;
+    width: 40vw;
+    height: 40vh;
+    z-index: 20;
+    visibility: hidden;
+}
+
+#project-spiral-1 {
+    transform: translateY(-50%);
+    transform-origin: right center;
+    top: 0;
+    right: 40%;
+    width: 25%;
     position: absolute;
     visibility: hidden;
 }

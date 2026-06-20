@@ -13,7 +13,7 @@ const EDUCATION_SPIRAL_2_ID = "education-spiral-2";
 const EXPERIENCE_SPIRAL_1_ID = "experience-spiral-1";
 const EXPERIENCE_SPIRAL_2_ID = "experience-spiral-2";
 const EXPERIENCE_SPIRAL_3_ID = "experience-spiral-3";
-const PROJECTS_SPIRAL_1_ID = "projects-spiral-1";
+const PROJECT_SPIRAL_1_ID = "project-spiral-1";
 
 
 // when {key} is translated, open {value}
@@ -46,8 +46,8 @@ const SPIRAL_DATA = [
     },
     {
         pathId: ABOUT_ME_SPIRAL_3_ID,
-        d: "M 24.0416 -63.6396 Q 67 -61 89.0955 -82.0244 Q 114.4599 -111.5165 113.1306 -134.8238 Q 104.4139 -169.5516 70.6549 -182.2138 Q 48.3866 -185.2343 32.0863 -173.5869 Q 19.7607 -163.565 16.7668 -149.1069 Q 15.1817 -134.7721 24.6207 -124.241 Q 44.5477 -109.6016 65.0538 -121.6224",
-        viewBox: "52 -15 152 127",
+        d: "M 24 -64 Q 67 -61 89 -82 Q 114 -112 113 -135 Q 104 -170 71 -182 Q 48 -185 32 -174 Q 20 -164 17 -149 Q 15 -135 25 -124 Q 45 -110 65 -122",
+        viewBox: "5 -195 119 144",
         filter: DEFAULT_SPIRAL_FILTER,
     },
     {
@@ -82,6 +82,12 @@ const SPIRAL_DATA = [
         pathId: EXPERIENCE_SPIRAL_3_ID,
         d: "M -59 13 Q -91 -4 -122 -7 Q -160 -2 -175 15 Q -194 46 -179 79 Q -165 97 -145 100 Q -130 102 -117 94 Q -106 85 -105 70 Q -111 38 -134 43",
         viewBox: "-215 -30 180 155",
+        filter: DEFAULT_SPIRAL_FILTER,
+    },
+    {
+        pathId: PROJECT_SPIRAL_1_ID,
+        d: "M -14 -78 Q 20 -108 26 -136 Q 30 -164 14 -180 Q -6 -197 -31 -190 Q -50 -185 -57 -171 Q -69 -151 -61 -129 Q -57 -118 -40 -117 Q -22 -120 -15 -139",
+        viewBox: "-79 -207 119 139",
         filter: DEFAULT_SPIRAL_FILTER,
     },
 ];
@@ -165,6 +171,7 @@ const ID_TO_MESSAGE_MAP = {
     [EXPERIENCE_SPIRAL_1_ID]: "Andrew is currently at Expedia Group (2023-present).\nHe is on the Incentives team,\nworking on awarding rewards points at scale.",
     [EXPERIENCE_SPIRAL_2_ID]: "He worked at Amazon on the Prime team from 2021-2023,\nalso on customer retention and award flows.",
     [EXPERIENCE_SPIRAL_3_ID]: "... and from 2018-2021, Andrew did web development\npart-time through college (yay PHP!)",
+    [PROJECT_SPIRAL_1_ID]: "I self host gitea, so my Github might look bare...\nI'm currently writing a Rust database for fun.\nAsk me about what else I'm doing! (or stalk my old stuff)"
 }
 
 const translated = {};
