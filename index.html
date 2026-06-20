@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Andrew Bennett (Go Play Outer Wilds)</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
@@ -18,34 +19,54 @@
 </head>
 
 <body>
-    <div id="andrew-title-overlay"></div>
-    <div class="bennett-title-overlay" id="bennett-base"></div>
-    <div class="bennett-title-overlay" id="bennett-bbottom"></div>
-    <div class="bennett-title-overlay" id="bennett-bmiddle"></div>
-    <div class="bennett-title-overlay" id="bennett-e1top"></div>
-    <div class="bennett-title-overlay" id="bennett-e2bottomleft"></div>
-    <div class="bennett-title-overlay" id="bennett-e2bottomright"></div>
-    <div class="bennett-title-overlay" id="bennett-e2fragment"></div>
-    <div class="bennett-title-overlay" id="bennett-e2top"></div>
-    <div class="bennett-title-overlay" id="bennett-n1top"></div>
-    <div class="bennett-title-overlay" id="bennett-n2top"></div>
-    <div id="top-bar" class="title-bar"></div>
-    <div id="bottom-bar" class="title-bar"></div>
-    <div class="menu-option" id="about-me">
-        <a onclick="writeSpiral('about-me-spiral-1')">ABOUT ME</a>
+    <div id="menu-graphics">
+        <div id="andrew-title-overlay"></div>
+        <div class="bennett-title-overlay" id="bennett-base"></div>
+        <div class="bennett-title-overlay" id="bennett-bbottom"></div>
+        <div class="bennett-title-overlay" id="bennett-bmiddle"></div>
+        <div class="bennett-title-overlay" id="bennett-e1top"></div>
+        <div class="bennett-title-overlay" id="bennett-e2bottomleft"></div>
+        <div class="bennett-title-overlay" id="bennett-e2bottomright"></div>
+        <div class="bennett-title-overlay" id="bennett-e2fragment"></div>
+        <div class="bennett-title-overlay" id="bennett-e2top"></div>
+        <div class="bennett-title-overlay" id="bennett-n1top"></div>
+        <div class="bennett-title-overlay" id="bennett-n2top"></div>
+        <div id="top-bar" class="title-bar"></div>
+        <div id="bottom-bar" class="title-bar"></div>
+        <div class="menu-option" id="about-me">
+            <a onclick="writeSpiral('about-me-spiral-1')">ABOUT ME</a>
+        </div>
+        <div class="menu-option" id="education">
+            <a onclick="writeSpiral('education-spiral-1')">EDUCATION</a>
+        </div>
+        <div class="menu-option" id="experience">
+            <a onclick="writeSpiral('experience-spiral-1')">EXPERIENCE</a>
+        </div>
+        <div class="menu-option" id="projects">
+            <a onclick="writeSpiral('projects-spiral-1')">PROJECTS</a>
+        </div>
+        <div id="phone-text">
+            <p>
+                Hi and sorry! I meant for this to be viewed on your desktop. If you want, you can switch your phone to
+                horizontal and get a look at the planet (and the stars will all explode over time, and my name will
+                drift apart!), but the rest of this page is pretty dependent on css-mouse animations... thank you for
+                visiting!
+            </p>
+        </div>
     </div>
-    <div class="menu-option" id="education">
-        <a onclick="writeSpiral('education-spiral-1')">EDUCATION</a>
+    <div id="about-me-spirals" class="spiral-parent">
+        <div id="about-me-spiral-1"></div>
+        <div id="about-me-spiral-2"></div>
     </div>
-    <div class="menu-option" id="experience">
-        <a onclick="writeSpiral('experience-spiral-1')">EXPERIENCE</a>
+    <div id="education-spirals" class="spiral-parent">
+        <div id="education-spiral-1"></div>
+        <div id="education-spiral-2"></div>
     </div>
-    <div class="menu-option" id="projects">
-        <a onclick="writeSpiral('projects-spiral-1')">PROJECTS</a>
+    <div id="experience-spirals" class="spiral-parent">
+        <div id="experience-spiral-1"></div>
+        <div id="experience-spiral-2"></div>
+        <div id="experience-spiral-3"></div>
     </div>
-    <div id="about-me-spiral-1"></div>
-    <div id="education-spiral-1"></div>
-    <div id="education-spiral-2"></div>
     <div id="translator-popup">
         <p id="translator-text">&lt;!&gt; Untranslated Nomai writing &lt;!&gt;</p>
         <img src="./assets/translator.png" alt="" />

@@ -1,4 +1,4 @@
-const UNTRANSLATED = "<!> Untranslated Nomai writing <!>";
+const UNTRANSLATED = "<!> Untranslated Nomai writing <!>\n(click to translate)";
 const TRANSLATE_TIME = 0.7;
 let uTime = 0;
 let currentId = '';
@@ -6,6 +6,8 @@ let currentId = '';
 // GLYPH SETUP BLOCK (FOR MY READABILITY)
 
 const ABOUT_ME_SPIRAL_1_ID = "about-me-spiral-1";
+const ABOUT_ME_SPIRAL_2_ID = "about-me-spiral-2";
+const ABOUT_ME_SPIRAL_3_ID = "about-me-spiral-3";
 const EDUCATION_SPIRAL_1_ID = "education-spiral-1";
 const EDUCATION_SPIRAL_2_ID = "education-spiral-2";
 const EXPERIENCE_SPIRAL_1_ID = "experience-spiral-1";
@@ -16,6 +18,8 @@ const PROJECTS_SPIRAL_1_ID = "projects-spiral-1";
 
 // when {key} is translated, open {value}
 const CHILD_SPIRAL_MAP = {
+    [ABOUT_ME_SPIRAL_1_ID]: ABOUT_ME_SPIRAL_2_ID,
+    [ABOUT_ME_SPIRAL_2_ID]: ABOUT_ME_SPIRAL_3_ID,
     [EDUCATION_SPIRAL_1_ID]: EDUCATION_SPIRAL_2_ID,
     [EXPERIENCE_SPIRAL_1_ID]: EXPERIENCE_SPIRAL_2_ID,
     [EXPERIENCE_SPIRAL_2_ID]: EXPERIENCE_SPIRAL_3_ID,
@@ -24,7 +28,7 @@ const CHILD_SPIRAL_MAP = {
 const DEFAULT_SPIRAL_FILTER = {
     baseFrequency: 0.8,
     numOctaves: 10,
-    scale: 25,
+    scale: 15,
 };
 
 const SPIRAL_DATA = [
@@ -32,6 +36,18 @@ const SPIRAL_DATA = [
         pathId: ABOUT_ME_SPIRAL_1_ID,
         d: "M -81 82 Q -25 55 12 7 Q 57 -49 45 -148 Q 31 -217 -43 -225 Q -114 -230 -148 -182 Q -180 -130 -156 -91 Q -125 -55 -95 -55 Q -36 -58 -36 -98",
         viewBox: "-190 -250 260 350",
+        filter: DEFAULT_SPIRAL_FILTER,
+    },
+    {
+        pathId: ABOUT_ME_SPIRAL_2_ID,
+        d: "M 62 28 Q 91 -4 121 -5 Q 160 -2 175 15 Q 194 46 179 79 Q 165 97 145 100 Q 130 102 117 94 Q 106 85 105 70 Q 109 46 132 40",
+        viewBox: "52 -15 152 127",
+        filter: DEFAULT_SPIRAL_FILTER,
+    },
+    {
+        pathId: ABOUT_ME_SPIRAL_3_ID,
+        d: "M 24.0416 -63.6396 Q 67 -61 89.0955 -82.0244 Q 114.4599 -111.5165 113.1306 -134.8238 Q 104.4139 -169.5516 70.6549 -182.2138 Q 48.3866 -185.2343 32.0863 -173.5869 Q 19.7607 -163.565 16.7668 -149.1069 Q 15.1817 -134.7721 24.6207 -124.241 Q 44.5477 -109.6016 65.0538 -121.6224",
+        viewBox: "52 -15 152 127",
         filter: DEFAULT_SPIRAL_FILTER,
     },
     {
@@ -47,9 +63,27 @@ const SPIRAL_DATA = [
         filter: {
             baseFrequency: 0.4,
             numOctaves: 5,
-            scale: 10,
+            scale: 7,
         },
-    }
+    },
+    {
+        pathId: EXPERIENCE_SPIRAL_1_ID,
+        d: "M -40 -33 Q 20 -71 18 -121 Q 16 -159 0 -176 Q -29 -197 -63 -185 Q -82 -173 -87 -153.6 Q -90 -138 -83 -125 Q -75 -113 -61 -111 Q -28 -114 -34 -147",
+        viewBox: "-100 -200 160 200",
+        filter: DEFAULT_SPIRAL_FILTER,
+    },
+    {
+        pathId: EXPERIENCE_SPIRAL_2_ID,
+        d: "M -51 -32 Q -61 -67 -81 -92 Q -112 -114 -135 -113 Q -170 -104 -182 -71 Q -185 -48 -174 -32 Q -164 -20 -149 -17 Q -135 -15 -124 -25 Q -105 -52 -125 -64",
+        viewBox: "-205 -135 175 140",
+        filter: DEFAULT_SPIRAL_FILTER,
+    },
+    {
+        pathId: EXPERIENCE_SPIRAL_3_ID,
+        d: "M -59 13 Q -91 -4 -122 -7 Q -160 -2 -175 15 Q -194 46 -179 79 Q -165 97 -145 100 Q -130 102 -117 94 Q -106 85 -105 70 Q -111 38 -134 43",
+        viewBox: "-215 -30 180 155",
+        filter: DEFAULT_SPIRAL_FILTER,
+    },
 ];
 
 const NOMAI_SVG_DEFS = ({ baseFrequency, numOctaves, scale }) => `
@@ -124,8 +158,13 @@ SPIRAL_DATA.forEach(setupSpiral);
 
 const ID_TO_MESSAGE_MAP = {
     [ABOUT_ME_SPIRAL_1_ID]: "Andrew Bennett is a software engineer from Wisconsin.\nHe lives in Seattle right now.",
+    [ABOUT_ME_SPIRAL_2_ID]: "He likes to write Kotlin and Rust.\nNo idea why this page is raw JS and HTML...\nDisgusting.",
+    [ABOUT_ME_SPIRAL_3_ID]: "Feel free to reach out to awbennett@wisc.edu.\nGithub: andrew-bbq\nLinkedIn: /in/andruwu",
     [EDUCATION_SPIRAL_1_ID]: "Andrew has a bachelor's degree in computer science\nand a certificate in game design\nfrom the University of Wisconsin, Madison (2018-2021).",
     [EDUCATION_SPIRAL_2_ID]: "His GPA was good... probably.",
+    [EXPERIENCE_SPIRAL_1_ID]: "Andrew is currently at Expedia Group (2023-present).\nHe is on the Incentives team,\nworking on awarding rewards points at scale.",
+    [EXPERIENCE_SPIRAL_2_ID]: "He worked at Amazon on the Prime team from 2021-2023,\nalso on customer retention and award flows.",
+    [EXPERIENCE_SPIRAL_3_ID]: "... and from 2018-2021, Andrew did web development\npart-time through college (yay PHP!)",
 }
 
 const translated = {};

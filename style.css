@@ -27,24 +27,23 @@ canvas {
 }
 
 .title-bar {
-    min-width: 180px;
     position: fixed;
     z-index: 10;
-    width: 28vw;
+    width: 80%;
     height: 0;
     border-top: 1px dashed white;
+    left: 50%;
+    transform: translateX(-50%);
 
     animation: title-fade 10.5s ease-in forwards;
 }
 
 #top-bar {
-    left: 6vw;
-    top: 35vh;
+    top: 38%;
 }
 
 #bottom-bar {
-    left: 6vw;
-    top: 80vh;
+    top: 80%;
 }
 
 .menu-option a:hover {
@@ -81,10 +80,9 @@ canvas {
     font-family: 'ITCAvantGardeStd';
     white-space: nowrap;
     position: fixed;
-    left: 20vw;
-    width: 20vw;
-    font-size: 3vh;
-    height: 3vh;
+    left: 50%;
+    width: 50%;
+    font-size: 120%;
     z-index: 10;
     color: #ff8545;
     text-align: center;
@@ -94,43 +92,55 @@ canvas {
 }
 
 #about-me {
-    top: 47vh;
+    top: 47%;
 }
 
 #education {
-    top: 53vh;
+    top: 54%;
 }
 
 #experience {
-    top: 59vh;
+    top: 61%;
 }
 
 #projects {
-    top: 65vh;
+    top: 68%;
+}
+
+#menu-graphics {
+    min-width: 280px;
+    position: fixed;
+    top: 50%;
+    left: 20vw;
+    width: 30vw;
+    transform: translate(-50%, -50%);
+    height: 90vh;
 }
 
 #andrew-title-overlay {
-    position: fixed;
-    top: 9vh;
-    left: 12vw;
-    width: 17vw;
-    height: 10vh;
+    position: absolute;
+    top: 12%;
+    width: 50%;
+    height: 15%;
     background-image: url('./assets/andrew_title.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     z-index: 10;
     pointer-events: none;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     animation: title-fade 10s ease-in forwards;
 }
 
 .bennett-title-overlay {
-    position: fixed;
-    top: 18vh;
-    left: 5.5vw;
-    width: 30vw;
-    height: 15vh;
+    position: absolute;
+    top: -2%;
+    height: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -139,6 +149,44 @@ canvas {
 
     animation: title-fade 10.5s ease-in forwards;
 }
+
+#phone-text {
+    visibility: hidden;
+    animation: title-fade 10.5s ease-in forwards;
+}
+
+@media (max-width: 650px) {
+    #menu-graphics {
+        left: 50%;
+        width: 100vw;
+    }
+
+    .menu-option {
+        left: 0;
+        width: 100vw;
+        transform: none;
+        visibility: hidden;
+    }
+
+    #phone-text {
+        position: absolute;
+        left: 50%;
+        top: 46%;
+        transform: translateX(-50%);
+        width: 75%;
+        font-family: 'VT323';
+        font-size: 2.2vh;
+        text-align: center;
+        color: white;
+        visibility: visible;
+    }
+
+    .bennett-title-overlay {
+        width: 80%;
+        left: 50%;
+    }
+}
+
 
 @keyframes title-fade {
 
@@ -203,118 +251,178 @@ canvas {
 
 @keyframes float-up-left {
     5% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(-50%, 0) rotate(0deg);
     }
 
     100% {
-        transform: translate(-7%, -8vh) rotate(-13deg);
+        transform: translate(-57%, -8vh) rotate(-13deg);
     }
 }
 
 @keyframes float-up-right {
     5% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(-50%, 0) rotate(0deg);
     }
 
     100% {
-        transform: translate(13%, -9%) rotate(13deg);
+        transform: translate(-37%, -9%) rotate(13deg);
     }
 }
 
 @keyframes float-up-right-high {
     5% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(-50%, 0) rotate(0deg);
     }
 
     100% {
-        transform: translate(5%, -12%) rotate(4deg);
+        transform: translate(-45%, -12%) rotate(4deg);
     }
 }
 
 @keyframes float-down {
     5% {
-        transform: translate(0, 0);
+        transform: translate(-50%, 0);
     }
 
     100% {
-        transform: translate(0%, 9%);
+        transform: translate(-50%, 9%);
     }
 }
 
 @keyframes float-down-left {
     5% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(-50%, 0) rotate(0deg);
     }
 
     100% {
-        transform: translate(-9%, 3%) rotate(12deg);
+        transform: translate(-59%, 3%) rotate(12deg);
     }
 }
 
 @keyframes float-up-short {
     5% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(-50%, 0) rotate(0deg);
     }
 
     100% {
-        transform: translate(1%, -6%) rotate(4deg);
+        transform: translate(-49%, -6%) rotate(4deg);
     }
 }
 
 @keyframes float-down-right {
     5% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translate(-50%, 0) rotate(0deg);
     }
 
     100% {
-        transform: translate(9%, 20%) rotate(-5deg);
+        transform: translate(-41%, 20%) rotate(-5deg);
     }
 }
 
 @keyframes float-right-short {
     5% {
-        transform: translate(0, 0);
+        transform: translate(-50%, 0);
     }
 
     100% {
-        transform: translate(2.5%, 0%);
+        transform: translate(-47.5%, 0%);
     }
 }
 
-#about-me-spiral-1 {
-    transform: translateY(-50%) scale(0.5);
+#about-me-spirals {
+    height: 90vh;
+    width: 30vw;
     position: fixed;
-    right: 9vw;
-    top: 37vh;
-    width: 40vw;
+    right: 10vw;
+    top: 22vh;
+    z-index: 20;
+    visibility: hidden;
+}
+
+#about-me-spiral-1 {
+    position: absolute;
+    width: 60%;
     height: 40vh;
     z-index: 20;
     visibility: hidden;
 }
 
+#about-me-spiral-2 {
+    right: 17%;
+    top: 15%;
+    position: absolute;
+    width: 30%;
+    z-index: 20;
+    visibility: hidden;
+}
+
 #education-spirals {
-    right: 9vw;
-    top: 48vh;
+    height: 40vh;
+    width: 30vw;
+    position: fixed;
+    right: 10vw;
+    top: 22vh;
+    z-index: 20;
+    visibility: hidden;
 }
 
 #education-spiral-1 {
-    transform: translateY(-50%) scale(0.5);
-    position: fixed;
-    right: 9vw;
-    top: 48vh;
-    width: 40vw;
+    position: absolute;
+    width: 80%;
     z-index: 20;
     visibility: hidden;
 }
 
 
 #education-spiral-2 {
-    transform: translateY(-50%) scale(0.5);
-    position: fixed;
-    right: 30vw;
-    top: 34vh;
-    width: 15vw;
+    position: absolute;
+    top: -4%;
+    width: 30%;
     z-index: 20;
+    visibility: hidden;
+}
+
+#experience-spirals {
+    height: 100%;
+    position: fixed;
+    right: 9vw;
+    top: 48vh;
+    width: 40vw;
+    height: 40vh;
+    z-index: 20;
+    visibility: hidden;
+}
+
+#experience-spiral-1 {
+    transform: translateY(-50%) scale(0.5);
+    transform-origin: right center;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    visibility: hidden;
+}
+
+#experience-spiral-2 {
+    transform: translateY(-50%) scale(0.5);
+    transform-origin: right center;
+    top: -18%;
+    right: 41%;
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    visibility: hidden;
+}
+
+#experience-spiral-3 {
+    transform: translateY(-50%) scale(0.5);
+    transform-origin: right center;
+    top: -22%;
+    right: 65%;
+    width: 50%;
+    height: 50%;
+    position: absolute;
     visibility: hidden;
 }
 
@@ -406,7 +514,7 @@ canvas {
     white-space: pre-line;
 }
 
-.active-spiral:hover~#translator-popup {
+.spiral-parent:has(.active-spiral:hover)~#translator-popup {
     transform: translateX(-50%) translateY(0);
 }
 
